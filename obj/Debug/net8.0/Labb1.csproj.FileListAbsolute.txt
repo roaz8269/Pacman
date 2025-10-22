@@ -1,0 +1,18 @@
+C:\Users\rosaa\Desktop\Labb 1\Labb1\obj\Debug\net8.0\Labb1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rosaa\Desktop\Labb 1\Labb1\obj\Debug\net8.0\Labb1.AssemblyInfoInputs.cache
+C:\Users\rosaa\Desktop\Labb 1\Labb1\obj\Debug\net8.0\Labb1.AssemblyInfo.cs
+C:\Users\rosaa\Desktop\Labb 1\Labb1\obj\Debug\net8.0\Labb1.csproj.CoreCompileInputs.cache
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.AssemblyInfoInputs.cache
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.AssemblyInfo.cs
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.csproj.CoreCompileInputs.cache
+C:\Users\rosaa\Desktop\Labb1\bin\Debug\net8.0\Labb1.exe
+C:\Users\rosaa\Desktop\Labb1\bin\Debug\net8.0\Labb1.deps.json
+C:\Users\rosaa\Desktop\Labb1\bin\Debug\net8.0\Labb1.runtimeconfig.json
+C:\Users\rosaa\Desktop\Labb1\bin\Debug\net8.0\Labb1.dll
+C:\Users\rosaa\Desktop\Labb1\bin\Debug\net8.0\Labb1.pdb
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.dll
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\refint\Labb1.dll
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.pdb
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\Labb1.genruntimeconfig.cache
+C:\Users\rosaa\Desktop\Labb1\obj\Debug\net8.0\ref\Labb1.dll
