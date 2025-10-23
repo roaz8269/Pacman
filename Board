@@ -1,78 +1,95 @@
-public class Board
-{
-    private IBoardObject[,] grid;
+ public class Board
+ {
+     public List<List<IBoardObject>> grid;
+     public List<List<IBoardObject>> Grid => grid;
 
-    public int Width => grid.GetLength(1);
-    public int Height => grid.GetLength(0);
+     public int Height => grid.Count;
+     public int Width => grid[0].Count;
+     public Board()
+     {
+         string[] maze = new string[]
+         {
 
-    public Board()
-    {
-        string[] maze = new string[]
-        {
-
-"#################################",
-"#...#.......................#...#",
-"#.#.#.#########.#.#########.#.#.#",
-"#.......#.......#.......#.......#",
-"###.#.#.#.#####.#.#####.#.#.#.###",
-"#...#.#.#.#...#.#.#...#.#.#.#...#",
-"#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
-"#...#.#.#.#...#.#.#...#.#.#.#...#",
-"#####.#.#.##.##.#.##.##.#.#.#####",
-"#.....#.#...............#.#.....#",
-"#.#####.#.##.###.###.##.#.#####.#",
-"#............#.....#............#",
-"#.#####.#.##.#######.##.#.#####.#",
-"#.....#.#...............#.#.....#",
-"#####.#.#.##.##.#.##.##.#.#.#####",
-"#...#.#.#.#...#.#.#...#.#.#.#...#",
-"#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
-"#...#.#.#.#...#.#.#...#.#.#.#...#",
-"###.#.#.#.#####.#.#####.#.#.#.###",
-"#.......#.......#.......#.......#",
-"#.#.#.#########.#.#########.#.#.#",
-"#...#.......................#...#",
-"#################################"
-
-
-        };
-
-        grid = new IBoardObject[maze.Length, maze[0].Length];
-
-        for (int y = 0; y < maze.Length; y++)
-        {
-            for (int x = 0; x < maze[y].Length; x++)
-            {
-                char c = maze[y][x];
-                grid[y, x] = c switch
-                {
-                    '#' => new Wall(),
-                    '.' => new Empty(),
-                    ' ' => new Empty(),
-                    _ => throw new Exception($"Okänt tecken: {c} på ({x},{y})")
-                };
-            }
-        }
-    }
-
-    public void Print()
-    {
-        for (int y = 0; y < Height; y++)
-        {
-            for (int x = 0; x < Width; x++)
-            {
-                Console.Write(grid[y, x].character);
-            }
-            Console.WriteLine();
-        }
-    }
-
-    public IBoardObject GetObjectAt(int x, int y)
-    {
-        if (x < 0 || x >= Width || y < 0 || y >= Height)
-            throw new ArgumentOutOfRangeException("Position utanför brädet.");
-        return grid[y, x];
-    }
+ "#################################",
+ "#...#.......................#...#",
+ "#.#.#.#########.#.#########.#.#.#",
+ "#.......#.......#.......#.......#",
+ "###.#.#.#.#####.#.#####.#.#.#.###",
+ "#...#.#.#.#...#.#.#...#.#.#.#...#",
+ "#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
+ "#...#.#.#.#...#.#.#...#.#.#.#...#",
+ "#####.#.#.##.##.#.##.##.#.#.#####",
+ "#.....#.#...............#.#.....#",
+ "#.#####.#.##.###.###.##.#.#####.#",
+ "#............#.....#............#",
+ "#.#####.#.##.#######.##.#.#####.#",
+ "#.....#.#...............#.#.....#",
+ "#####.#.#.##.##.#.##.##.#.#.#####",
+ "#...#.#.#.#...#.#.#...#.#.#.#...#",
+ "#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
+ "#...#.#.#.#...#.#.#...#.#.#.#...#",
+ "###.#.#.#.#####.#.#####.#.#.#.###",
+ "#.......#.......#.......#.......#",
+ "#.#.#.#########.#.#########.#.#.#",
+ "#...#.......................#...#",
+ "#################################"
 
 
-}
+         };
+
+         grid = new List<List<IBoardObject>>();
+
+         for (int y = 0; y < maze.Length; y++)
+         {
+             var row = new List<IBoardObject>();
+             for (int x = 0; x < maze[y].Length; x++)
+             {
+                 char c = maze[y][x];
+                 row.Add(c switch
+                 {
+                     '#' => new Wall(),
+                     '.' => new Empty(),
+                     ' ' => new Empty(),
+                     _ => throw new Exception($"Okänt tecken: {c} på ({x},{y})")
+                 });
+             }
+             grid.Add(row);
+         }
+     }
+
+     /*
+     public void Print()
+     {
+         foreach (var row in grid)
+         {
+             foreach (var obj in row)
+                 Console.Write(obj.character);
+             Console.WriteLine();
+         }
+     }
+     */
+     public void Print(Pacman pacman)
+     {
+         for (int y = 0; y < Height; y++)
+         {
+             for (int x = 0; x < Width; x++)
+             {
+                 // Om Pacman är på denna position, skriv honom
+                 if (pacman.currentPosition.x == x && pacman.currentPosition.y == y)
+                     Console.Write(pacman.appearence);
+                 else
+                     Console.Write(grid[y][x].character); // annars skriv brädet
+             }
+             Console.WriteLine();
+         }
+     }
+
+     public IBoardObject GetObjectAt(int x, int y)
+     {
+         if (x < 0 || x >= Width || y < 0 || y >= Height)
+             throw new ArgumentOutOfRangeException("Position utanför brädet.");
+         return grid[y][x];  // OBS: [y][x] istället för [y, x]
+     }
+
+
+ }
