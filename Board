@@ -1,0 +1,78 @@
+public class Board
+{
+    private IBoardObject[,] grid;
+
+    public int Width => grid.GetLength(1);
+    public int Height => grid.GetLength(0);
+
+    public Board()
+    {
+        string[] maze = new string[]
+        {
+
+"#################################",
+"#...#.......................#...#",
+"#.#.#.#########.#.#########.#.#.#",
+"#.......#.......#.......#.......#",
+"###.#.#.#.#####.#.#####.#.#.#.###",
+"#...#.#.#.#...#.#.#...#.#.#.#...#",
+"#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
+"#...#.#.#.#...#.#.#...#.#.#.#...#",
+"#####.#.#.##.##.#.##.##.#.#.#####",
+"#.....#.#...............#.#.....#",
+"#.#####.#.##.###.###.##.#.#####.#",
+"#............#.....#............#",
+"#.#####.#.##.#######.##.#.#####.#",
+"#.....#.#...............#.#.....#",
+"#####.#.#.##.##.#.##.##.#.#.#####",
+"#...#.#.#.#...#.#.#...#.#.#.#...#",
+"#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#.#",
+"#...#.#.#.#...#.#.#...#.#.#.#...#",
+"###.#.#.#.#####.#.#####.#.#.#.###",
+"#.......#.......#.......#.......#",
+"#.#.#.#########.#.#########.#.#.#",
+"#...#.......................#...#",
+"#################################"
+
+
+        };
+
+        grid = new IBoardObject[maze.Length, maze[0].Length];
+
+        for (int y = 0; y < maze.Length; y++)
+        {
+            for (int x = 0; x < maze[y].Length; x++)
+            {
+                char c = maze[y][x];
+                grid[y, x] = c switch
+                {
+                    '#' => new Wall(),
+                    '.' => new Empty(),
+                    ' ' => new Empty(),
+                    _ => throw new Exception($"Okänt tecken: {c} på ({x},{y})")
+                };
+            }
+        }
+    }
+
+    public void Print()
+    {
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                Console.Write(grid[y, x].character);
+            }
+            Console.WriteLine();
+        }
+    }
+
+    public IBoardObject GetObjectAt(int x, int y)
+    {
+        if (x < 0 || x >= Width || y < 0 || y >= Height)
+            throw new ArgumentOutOfRangeException("Position utanför brädet.");
+        return grid[y, x];
+    }
+
+
+}
