@@ -1,0 +1,112 @@
+public interface IAutoMove
+{
+    (int row, int col) NextMove();
+}
+
+public class RandomMove : IAutoMove
+{
+
+    private Board board;
+    private (int x, int y) currentPosition;
+    private Random random = new Random();
+
+    public RandomMove(Board board, (int x, int y) startPosition)
+    {
+        this.board = board;
+        this.currentPosition = startPosition;
+    }
+
+    public void UpdatePosition((int x, int y) newPosition)
+    {
+        currentPosition = newPosition;
+    }
+
+    public (int row, int col) NextMove()
+    {
+
+        var possibleSteps = new List<(int row, int col)>
+        {
+            (0, 1),   // höger
+            (1, 0),   // ner
+            (0, -1),  // vänster
+            (-1, 0)   // upp
+        };
+
+        var validSteps = possibleSteps
+            .Where(step =>
+            {
+                int newX = currentPosition.x + step.row;
+                int newY = currentPosition.y + step.col;
+
+                return newX >= 0 && newX < board.Width &&
+                       newY >= 0 && newY < board.Height &&
+                       board.grid[newY][newX].canMove;
+            })
+            .ToList();
+
+        if (validSteps.Count == 0)
+            return (0, 0);
+
+        int index = random.Next(validSteps.Count);
+        return validSteps[index];
+
+       
+    }
+}
+
+ public class GoalOrientedMove : IAutoMove
+ {
+     private Board board;
+     private Pacman pacman;
+     private (int x, int y) currentPosition;
+
+     public GoalOrientedMove(Board board, Pacman pacman, (int x, int y) startPosition)
+     {
+         this.board = board;
+         this.pacman = pacman;
+         this.currentPosition = startPosition;
+     }
+
+     public void UpdatePosition((int x, int y) newPosition)
+     {
+         currentPosition = newPosition;
+     }
+
+     public (int row, int col) NextMove()
+     {
+         var target = pacman.currentPosition;
+
+         var possibleSteps = new List<(int row, int col)>
+         {
+             (0, 1),   // höger
+             (1, 0),   // ner
+             (0, -1),  // vänster
+             (-1, 0)   // upp
+         };
+
+         var validSteps = possibleSteps
+             .Where(step =>
+             {
+                 int newX = currentPosition.x + step.row;
+                 int newY = currentPosition.y + step.col;
+
+                 return newX >= 0 && newX < board.Width &&
+                        newY >= 0 && newY < board.Height &&
+                        board.grid[newY][newX].canMove;
+             });
+
+         var bestStep = validSteps
+             .OrderBy(step =>
+             {
+                 int newX = currentPosition.x + step.row;
+                 int newY = currentPosition.y + step.col;
+                 int dx = newX - target.x;
+                 int dy = newY - target.y;
+                 return dx * dx + dy * dy; 
+             })
+             .FirstOrDefault();
+
+         return bestStep; // returnerar (row, col)
+     }
+
+ }
